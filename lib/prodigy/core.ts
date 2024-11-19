@@ -5,6 +5,8 @@ const domain = process.env.PRODIGY_API_DOMAIN!;
 export const apiKey = process.env.PRODIGY_STORE_TOKEN!;
 
 export function makeFullUrl(path: string) {
+  if (path.startsWith('https://') || path.startsWith('http://')) { return path; }
+
   return `${domain}${ensureStartsWith(path, '/')}`;
 }
 
