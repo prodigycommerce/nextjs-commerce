@@ -1,4 +1,4 @@
-import { makeFullUrl } from 'lib/prodigy/core';
+import { makeApiFullUrl } from 'lib/prodigy/core';
 import { Image } from '../types';
 
 const imageStub = { url: '/product-icon.png', altText: '' };
@@ -11,6 +11,6 @@ export function reshapeFeaturedImage(imagePath: unknown, altText: string = ''): 
   if (!(typeof imagePath === 'string')) {
     return imageStub;
   }
-  const url = makeFullUrl(imagePath);
+  const url = makeApiFullUrl(imagePath);
   return { url, altText };
 }

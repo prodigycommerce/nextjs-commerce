@@ -1,5 +1,5 @@
 import { TAGS } from '../constants';
-import { makeFullUrl, prodigyFetch } from '../core';
+import { makeCheckoutUrl, prodigyFetch } from '../core';
 import { Cart, CartItem } from '../types';
 import { JSONObject } from '../utils/json-api';
 import { reshapeFeaturedImage, reshapeMoney } from './reshapers';
@@ -25,19 +25,23 @@ function reshapeLineItem(lineItem: JSONObject): CartItem {
   } as CartItem;
 }
 
-function reshapeCart(cart: JSONObject): Cart {
+function reshapeCart(cart: JSONObject): Cart | undefined {
+  if (!cart) {
+    return undefined;
+  }
   const lineItems = cart.lineItems as JSONObject[];
+
   return {
     id: cart.token,
-    checkoutUrl: makeFullUrl(`checkout/${cart.token}`),
+    checkoutUrl: makeCheckoutUrl(cart.id as string, cart.token as string),
     cost: {
       totalAmount: reshapeMoney(cart.total as string),
       // Subtotal and tax are not exposed by Prodigy API at storefront
       subtotalAmount: reshapeMoney('0.0'),
       totalTaxAmount: reshapeMoney('0.0')
     },
-    lines: lineItems.map(reshapeLineItem),
-    totalQuantity: lineItems.reduce((acc, lineItem) => acc + Number(lineItem.quantity), 0)
+    lines: lineItems?.map(reshapeLineItem) || [],
+    totalQuantity: lineItems?.reduce((acc, lineItem) => acc + Number(lineItem.quantity), 0) || 0
   } as Cart;
 }
 
@@ -65,7 +69,7 @@ export function createCart() {}
 export async function addToCart(
   cartToken: string | undefined,
   lines: { variantId: string; quantity: number }[]
-): Promise<Cart> {
+): Promise<Cart | undefined> {
   const response = await prodigyFetch({
     endpoint: '/api/v1/plugin/cart',
     method: 'PATCH',
@@ -76,6 +80,7 @@ export async function addToCart(
     },
     cache: 'no-store'
   });
+
   return reshapeCart(response.data as JSONObject);
 }
 
@@ -100,6 +105,18 @@ export async function updateCart(
     params: {
       order_token: cartToken,
       line_item: { variant_id: line.variantId, quantity: line.quantity }
+    },
+    cache: 'no-store'
+  });
+}
+
+export async function deleteCart(cartToken: string): Promise<void> {
+  const response = await prodigyFetch({
+    endpoint: `/api/v1/plugin/orders/${cartToken}`,
+    method: 'DELETE',
+    tags: [TAGS.cart],
+    params: {
+      include: 'line-items'
     },
     cache: 'no-store'
   });

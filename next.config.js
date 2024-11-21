@@ -7,7 +7,7 @@ module.exports = {
         protocol: 'https',
         hostname: 'prodigy-commerce-production.s3.*.amazonaws.com',
         pathname: '/store/**',
-        port: '',
+        port: ''
       },
       {
         protocol: 'http',

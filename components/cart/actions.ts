@@ -1,7 +1,8 @@
 'use server';
 
-import { TAGS } from 'lib/prodigy/constants';
 import { addToCart, getCart, removeFromCart, updateCart } from 'lib/prodigy';
+import { deleteCart } from 'lib/prodigy/api/cart';
+import { TAGS } from 'lib/prodigy/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -15,7 +16,9 @@ export async function addItem(prevState: any, selectedVariantId: string | undefi
 
   try {
     const cart = await addToCart(cartId, [{ variantId: selectedVariantId, quantity: 1 }]);
-    if (!cartId) {
+    if (!cart) {
+      cookies().delete('cartId');
+    } else if (!cartId) {
       cookies().set('cartId', cart.id!);
     }
 
@@ -42,7 +45,7 @@ export async function removeItem(prevState: any, merchandiseId: string) {
     const lineItem = cart.lines.find((line) => line.merchandise.id === merchandiseId);
 
     if (lineItem && lineItem.id) {
-      await removeFromCart(cartId, lineItem.id);
+      await removeItemOrCart(cartId, lineItem.id, cart.lines.length);
       revalidateTag(TAGS.cart);
     } else {
       return 'Item not found in cart';
@@ -78,7 +81,7 @@ export async function updateItemQuantity(
 
     if (lineItem && lineItem.id) {
       if (quantity === 0) {
-        await removeFromCart(cartId, lineItem.id);
+        await removeItemOrCart(cartId, lineItem.id, cart.lines.length);
       } else {
         await updateCart(cartId, {
           id: lineItem.id,
@@ -119,3 +122,12 @@ export async function redirectToCheckout() {
 //   let cart = await createCart();
 //   cookies().set('cartId', cart.id!);
 // }
+
+async function removeItemOrCart(cartId: string, itemId: string, cartSize: number) {
+  if (cartSize < 2) {
+    await deleteCart(cartId);
+    cookies().delete('cartId');
+  } else {
+    await removeFromCart(cartId, itemId);
+  }
+}

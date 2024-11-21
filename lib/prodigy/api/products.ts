@@ -1,4 +1,4 @@
-import { makeFullUrl, prodigyFetch } from 'lib/prodigy/core';
+import { makeApiFullUrl, prodigyFetch } from 'lib/prodigy/core';
 import { TAGS } from '../constants';
 import { Image, Product, ProductOption, ProductVariant } from '../types';
 import { JSONObject, ParsedJSONApiData } from '../utils/json-api';
@@ -14,7 +14,7 @@ function reshapePrice(price: string, priceRange: ProdigyPriceRange = {}) {
 }
 
 function reshapeImage(image: JSONObject, altText: string = ''): Image {
-  const url = makeFullUrl(image.croppedUrl as string);
+  const url = makeApiFullUrl(image.croppedUrl as string);
   const croppingParams = image.croppingParams as JSONObject;
 
   return {

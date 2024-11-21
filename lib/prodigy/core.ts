@@ -1,13 +1,23 @@
 import { ensureStartsWith } from './utils';
 import { deserializeJSONApi, isJSONApiDocument, ParsedJSONApiData } from './utils/json-api';
 
-const domain = process.env.PRODIGY_API_DOMAIN!;
+const apiDomain = process.env.PRODIGY_API_DOMAIN!;
+const clientDomain = process.env.PRODIGY_CLIENT_DOMAIN!;
 export const apiKey = process.env.PRODIGY_STORE_TOKEN!;
+const redirectUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : 'http://localhost:3001';
 
-export function makeFullUrl(path: string) {
-  if (path.startsWith('https://') || path.startsWith('http://')) { return path; }
+export function makeApiFullUrl(path: string) {
+  if (path.startsWith('https://') || path.startsWith('http://')) {
+    return path;
+  }
 
-  return `${domain}${ensureStartsWith(path, '/')}`;
+  return `${apiDomain}${ensureStartsWith(path, '/')}`;
+}
+
+export function makeCheckoutUrl(orderId: string, orderToken: string) {
+  return `${clientDomain}/orders/${orderId}/checkout/login?token=${orderToken}&plugin_redirect_url=${redirectUrl}`;
 }
 
 export async function prodigyFetch<T>({
@@ -26,7 +36,7 @@ export async function prodigyFetch<T>({
   tags?: string[];
 }): Promise<ParsedJSONApiData | never> {
   const isGet = method === 'GET';
-  const url = new URL(makeFullUrl(endpoint));
+  const url = new URL(makeApiFullUrl(endpoint));
   if (isGet && params) {
     const searchParams = Object.fromEntries(
       Object.entries(params).filter(([name, value]) => value !== undefined)
