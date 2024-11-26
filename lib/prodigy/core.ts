@@ -1,12 +1,11 @@
+import { getBaseUrl } from 'lib/getBaseUrl';
 import { ensureStartsWith } from './utils';
 import { deserializeJSONApi, isJSONApiDocument, ParsedJSONApiData } from './utils/json-api';
 
 const apiDomain = process.env.PRODIGY_API_DOMAIN!;
 const clientDomain = process.env.PRODIGY_CLIENT_DOMAIN!;
 export const apiKey = process.env.PRODIGY_STORE_TOKEN!;
-const redirectUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : 'http://localhost:3001';
+const redirectUrl = getBaseUrl();
 
 export function makeApiFullUrl(path: string) {
   if (path.startsWith('https://') || path.startsWith('http://')) {

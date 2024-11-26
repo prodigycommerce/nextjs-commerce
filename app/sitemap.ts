@@ -1,3 +1,4 @@
+import { getBaseUrl } from 'lib/getBaseUrl';
 import { getCollections, getPages, getProducts } from 'lib/prodigy';
 import { validateEnvironmentVariables } from 'lib/prodigy/utils';
 import { MetadataRoute } from 'next';
@@ -7,9 +8,7 @@ type Route = {
   lastModified: string;
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : 'http://localhost:3001';
+const baseUrl = getBaseUrl();
 
 export const dynamic = 'force-dynamic';
 

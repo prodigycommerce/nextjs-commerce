@@ -1,13 +1,10 @@
+import { getBaseUrl } from 'lib/getBaseUrl';
 import { apiKey, prodigyFetch } from 'lib/prodigy/core';
 import { JSONObject } from 'lib/prodigy/utils/json-api';
 
-const url = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : 'http://localhost:3001';
-
 const STORE_SETTINGS = {
   pluginType: 'custom',
-  url,
+  url: getBaseUrl(),
   productPagePath: '/product',
   categoryPagePath: '/search',
   productsCallbackPath: '/api/revalidate/products',

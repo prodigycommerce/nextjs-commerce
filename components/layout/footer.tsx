@@ -63,6 +63,10 @@ export default async function Footer() {
             <a href="https://vercel.com" className="text-black dark:text-white">
               Created by ▲ Vercel
             </a>
+            <span className="text-black dark:text-white">{' and '}</span>
+            <a href="https://prodigycommerce.com" className="text-black dark:text-white">
+              Prodigy Commerce
+            </a>
           </p>
         </div>
       </div>

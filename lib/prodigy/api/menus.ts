@@ -2,14 +2,14 @@ import { TAGS } from '../constants';
 import { prodigyFetch } from '../core';
 import { Menu, Page } from '../types';
 
-const aboutPageBody = `<p>This website is built with <a href="https://github.com/prodigycommerce/nextjs-commerce" title="Next.js Commerce">Next.js Commerce</a>, which is a ecommerce template for creating a Prodigy Commerce storefront.&nbsp;</p>
+const aboutPageBody = `<p>This website is built with <a href="https://github.com/prodigycommerce/nextjs-commerce" title="Prodigy Next.js Commerce">Prodigy Next.js Commerce</a>, which is a ecommerce template for creating a Prodigy Commerce storefront.&nbsp;</p>
 <p>Support for real-world commerce features including:&nbsp;</p>
 <ul>
 <li>Out of stocks</li>
 <li>Cross variant / option availability (aka. Amazon style)</li>
 <li>Hidden products</li>
 <li>Dynamically driven content and features via Prodigy Commerce</li>
-<li>Seamless and secure checkout via <a href="https://prodigycommerce.com/" title="Prodigy Commerce">Prodigy Commerce</a>
+<li>Seamless and secure checkout via <a href="https://prodigycommerce.com" title="Prodigy Commerce">Prodigy Commerce</a>
 </li>
 <li>And more!</li>
 </ul>

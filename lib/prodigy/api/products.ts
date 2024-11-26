@@ -99,8 +99,8 @@ function reshapeProduct(product: JSONObject) {
     // Set to true if undefined because of different shape of index and show endpoints responses
     availableForSale: product.inStock ?? true,
     title: product.name,
-    description: product.description,
-    descriptionHtml: null,
+    description: product.metaDescription,
+    descriptionHtml: product.description,
     options: reshapeOptions(product.variantAttributes as JSONObject[]),
     priceRange: reshapePrice(product.price as string, product.priceRange as ProdigyPriceRange),
     variants: reshapeVariants(
