@@ -29,4 +29,21 @@ Your app should now be running on [localhost:3000](http://localhost:3000/).
 
 ## Vercel, Next.js Commerce, and Prodigy Commerce Integration Guide
 
-In near future this section will contain instructions to quickly set up your app.
+To deploy your Prodigy Commerce storefront on the Vercel platform you need to:
+1. [Log into Prodigy Commerce account](https://app.prodigycommerce.com/login).
+2. Select your store in the stores list.
+3. Go to [Settings](https://pdemo.prodigycommerce.com/settings) in the navigation bar.
+4. If your store is not connected you'll see "Want to connect custom plugin?" link, click at that link. If your store is connected you'll need to disconnect it first.
+5. "Store Token" modal should open and you would be able to copy the token. Never share this token to anyone except highly trusted parties. This token grants almost full access to your store.
+6. [Log into your Vercel account](https://vercel.com) and go to the Dashboard.
+7. Click on "Add New..." button and select "Project" in the dropdown.
+8. In "Clone Template" section find this template by clicking "Browse All Templates" and searching. Then select it.
+9. If you could not find it there click at "Import Third-Party Git Repository" in the "Import Git Repository" section. then paste url of this repository into a field and click "Continue".
+10. Select your team and fill in name of your project.
+11. Click on "Environment Variables" to open a section.
+12. In there add `PRODIGY_STORE_TOKEN` variable with value from step 5.
+13. Add `PRODIGY_API_DOMAIN` variable with value `https://api.prodigycommerce.com`.
+14. Add `PRODIGY_CLIENT_DOMAIN` variable with value `https://{your-store-name}.prodigycommerce.com`.
+15. Add `SITE_NAME` variable with name of your choice.
+16. Add other environment variables you see fit. Refer to `.env.example` for the list.
+17. Click "Deploy" button and you done. For any other question regarding Vercel platform refer to [Vercel Docs](https://vercel.com/docs).
