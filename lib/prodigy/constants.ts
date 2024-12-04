@@ -1,23 +1,21 @@
 export type SortFilterItem = {
   title: string;
   slug: string | null;
-  sortKey: 'created_at' | 'rating' | 'price' | 'name';
-  reverse: boolean;
+  sortKey: 'created_at' | 'rating' | 'price' | '-price' | 'name';
 };
 
 export const defaultSort: SortFilterItem = {
   title: 'Latest arrivals',
   slug: null,
   sortKey: 'created_at',
-  reverse: true
 };
 
 export const sorting: SortFilterItem[] = [
   defaultSort,
-  { title: 'Top Rated', slug: 'rating', sortKey: 'rating', reverse: false },
-  { title: 'Name', slug: 'name', sortKey: 'name', reverse: false },
-  { title: 'Price: Low to high', slug: 'price', sortKey: 'price', reverse: false },
-  { title: 'Price: High to low', slug: '-price', sortKey: 'price', reverse: true }
+  { title: 'Top Rated', slug: 'rating', sortKey: 'rating' },
+  { title: 'Name', slug: 'name', sortKey: 'name' },
+  { title: 'Price: Low to high', slug: 'price', sortKey: 'price' },
+  { title: 'Price: High to low', slug: '-price', sortKey: '-price' }
 ];
 
 export const TAGS = {
