@@ -5,6 +5,8 @@ import { JSONObject } from '../utils/json-api';
 import { reshapeFeaturedImage, reshapeMoney } from './reshapers';
 
 function reshapeLineItem(lineItem: JSONObject): CartItem {
+  const options = Array.isArray(lineItem.options) ? (lineItem.options as JSONObject[]) : [];
+
   return {
     id: lineItem.id,
     quantity: lineItem.quantity,
@@ -13,8 +15,8 @@ function reshapeLineItem(lineItem: JSONObject): CartItem {
     },
     merchandise: {
       id: lineItem.variantId,
-      title: lineItem.name,
-      selectedOptions: lineItem.options || [],
+      title: options.map((option) => option.value as string).join(' | '),
+      selectedOptions: options,
       product: {
         id: lineItem.productId,
         handle: lineItem.productId,

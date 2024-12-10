@@ -30,6 +30,7 @@ Your app should now be running on [localhost:3000](http://localhost:3000/).
 ## Vercel, Next.js Commerce, and Prodigy Commerce Integration Guide
 
 To deploy your Prodigy Commerce storefront on the Vercel platform you need to:
+
 1. [Log into Prodigy Commerce account](https://app.prodigycommerce.com/login).
 2. Select your store in the stores list.
 3. Go to [Settings](https://pdemo.prodigycommerce.com/settings) in the navigation bar.

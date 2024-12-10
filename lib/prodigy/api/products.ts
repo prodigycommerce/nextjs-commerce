@@ -55,7 +55,7 @@ function reshapeVariants(variants: JSONObject[]): ProductVariant[] {
       ({
         id: variant.id,
         title: variant.sku,
-        availableForSale: variant.visible,
+        availableForSale: (variant?.inventory as JSONObject)?.stock === 'in_stock',
         selectedOptions: (variant.options as Array<JSONObject>).map((option) => ({
           name: option.name,
           value: option.value
@@ -92,6 +92,8 @@ function reshapeProduct(product: JSONObject) {
   if (!product) {
     return undefined;
   }
+
+  console.log(product.variants);
 
   return {
     id: product.id,

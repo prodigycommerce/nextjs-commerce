@@ -14,5 +14,5 @@ export default {
         pathname: '/uploads/**'
       }
     ]
-  },
+  }
 };
