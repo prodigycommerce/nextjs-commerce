@@ -1,6 +1,6 @@
 export { addToCart, createCart, getCart, removeFromCart, updateCart } from './api/cart';
 export { getCollection, getCollections } from './api/collections';
-export { getMenu, getPage, getPages } from './api/menus';
+export { getMenu } from './api/menus';
 export {
   getCollectionProducts,
   getProduct,
